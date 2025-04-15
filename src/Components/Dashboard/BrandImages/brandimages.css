@@ -57,6 +57,16 @@
 }
 
 .brand-images-container .p-fileupload-buttonbar .p-button {
-    background: #215DB5 !important;
-    border: #215DB5 !important;
+  background: #215db5 !important;
+  border: #215db5 !important;
+}
+
+@media (max-width: 768px) {
+  .brand-images-list {
+    gap: 30px 15px;
+  }
+
+  .brand-images-list .shadow-md.relative.p-card.p-component {
+    width: calc(50% - 10px);
+  }
 }
