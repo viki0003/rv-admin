@@ -1,11 +1,15 @@
 import './footer.css'
+
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer>
       <div className="btm-ftr-cstm">
-        <div className="copyright-text">© 2025 Nationwide RV </div>
+        <div className="copyright-text">© {currentYear} Nationwide RV </div>
       </div>
     </footer>
   );
 };
+
 export default Footer;
