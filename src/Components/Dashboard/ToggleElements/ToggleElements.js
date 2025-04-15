@@ -1,6 +1,6 @@
 import React from "react";
 import "../TogglePriceFeature/togglestyle.css";
-import { useToggle } from "../../../ApiContext/ToggleContext"; // adjust path as needed
+import { useToggle } from "../../../ApiContext/ToggleContext";
 
 const ToggleElements = () => {
   const { toggles, updateToggles, loading } = useToggle();
