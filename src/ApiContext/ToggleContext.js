@@ -8,6 +8,7 @@ export const ToggleProvider = ({ children }) => {
   const defaultToggles = {
     show_social_icons: false,
     show_price_feature: false,
+    pre_approved: false,
   };
 
   const [toggles, setToggles] = useState(defaultToggles);
@@ -30,6 +31,7 @@ export const ToggleProvider = ({ children }) => {
       const newToggles = {
         show_social_icons: data?.show_social_icons === true || data?.show_social_icons === "true",
         show_price_feature: data?.show_price_feature === true || data?.show_price_feature === "true",
+        pre_approved: data?.pre_approved === true || data?.pre_approved === "true",
       };
 
       setToggles(newToggles);

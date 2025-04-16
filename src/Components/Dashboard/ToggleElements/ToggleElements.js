@@ -42,6 +42,19 @@ const ToggleElements = () => {
           <span className="slider round"></span>
         </label>
       </div>
+
+      <div className="toggle-price-feature">
+        <h2>Display Pre Approved Button</h2>
+        <label className="switch">
+          <input
+            type="checkbox"
+            name="pre_approved"
+            checked={toggles.pre_approved}
+            onChange={handleChange}
+          />
+          <span className="slider round"></span>
+        </label>
+      </div>
     </div>
   );
 };
