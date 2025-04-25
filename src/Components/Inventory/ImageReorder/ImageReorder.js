@@ -35,7 +35,7 @@ const ImageReorder = ({ product }) => {
     const newOrder = reordered.map((img) => img.url);
 
     try {
-      const contactId = product.contact_id || product.id; // fallback to product.id
+      const contactId = product.contact_id || product.id;
       await reorderRVPics(contactId, newOrder);
       toast.current.show({
         severity: "success",

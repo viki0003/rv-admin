@@ -57,3 +57,6 @@
     color: #000;
 }
   
+.vd {
+  grid-column: 1 / -1;
+}

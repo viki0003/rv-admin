@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PlaceholderImage from "../../../../Assets/Images/placeholder.jpg";
 import "./productitem.css";
-import ProductDialog from "../ProductDialog/ProductDialog"; // Import the new dialog component
+import ProductDialog from "../ProductDialog/ProductDialog";
 
 const ProductItem = ({ product }) => {
   const [imageSrc, setImageSrc] = useState(PlaceholderImage);

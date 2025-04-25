@@ -75,6 +75,7 @@
   display: flex;
   align-items: center;
   gap: 25px;
+  width: 100%;
 }
 
 .toggle-price-feature h2 {

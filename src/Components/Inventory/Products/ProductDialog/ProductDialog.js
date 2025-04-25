@@ -24,66 +24,91 @@ const ProductDialog = ({ visible, onHide, product }) => {
         <div className="input-fields-container">
           <h2 className="section-heading">Input Fields</h2>
           <form className="form-grid">
-            <input
-              className="input-field"
-              placeholder="Stock Number"
-              defaultValue={product.stock_number || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Vehicle Year"
-              defaultValue={product.vehicle_year || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Make"
-              defaultValue={product.make || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Series"
-              defaultValue={product.series || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Trim Model"
-              defaultValue={product.trim_model || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Sale Price"
-              defaultValue={product.sale_price || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Retail Price"
-              defaultValue={product.retail_price || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Vehicle Type"
-              defaultValue={product.vehicle_type || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Vehicle Type Length"
-              defaultValue={product.vehicle_type_length || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Sleeps"
-              defaultValue={product.sleeps || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Weight"
-              defaultValue={product.weight || ""}
-            />
-            <input
-              className="input-field"
-              placeholder="Vehicle Description"
-              defaultValue={product.vehicle_description || ""}
-            />
+            <div>
+              <label>Stock Number</label>
+              <input
+                className="input-field"
+                defaultValue={product.stock_number || ""}
+              />
+            </div>
+            <div>
+              <label>Vehicle Year</label>
+              <input
+                className="input-field"
+                defaultValue={product.vehicle_year || ""}
+              />
+            </div>
+            <div>
+              <label>Make</label>
+              <input
+                className="input-field"
+                defaultValue={product.make || ""}
+              />
+            </div>
+            <div>
+              <label>Series</label>
+              <input
+                className="input-field"
+                defaultValue={product.series || ""}
+              />
+            </div>
+            <div>
+              <label>Trim Model</label>
+              <input
+                className="input-field"
+                defaultValue={product.trim_model || ""}
+              />
+            </div>
+            <div>
+              <label>Sale Price</label>
+              <input
+                className="input-field"
+                defaultValue={product.sale_price || ""}
+              />
+            </div>
+            <div>
+              <label>Retail Price</label>
+              <input
+                className="input-field"
+                defaultValue={product.retail_price || ""}
+              />
+            </div>
+            <div>
+              <label>Vehicle Type</label>
+              <input
+                className="input-field"
+                defaultValue={product.vehicle_type || ""}
+              />
+            </div>
+            <div>
+              <label>Vehicle Type Length</label>
+              <input
+                className="input-field"
+                defaultValue={product.vehicle_type_length || ""}
+              />
+            </div>
+            <div>
+              <label>Sleeps</label>
+              <input
+                className="input-field"
+                defaultValue={product.sleeps || ""}
+              />
+            </div>
+            <div>
+              <label>Weight</label>
+              <input
+                className="input-field"
+                defaultValue={product.weight || ""}
+              />
+            </div>
+            <div className="vd">
+              <label>Vehicle Description</label>
+              <textarea
+                rows={5}
+                className="input-field"
+                defaultValue={product.vehicle_description || ""}
+              />
+            </div>
           </form>
         </div>
 
