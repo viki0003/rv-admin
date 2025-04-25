@@ -1,9 +1,88 @@
 .admin-panel h1 {
-    margin: 0;
+  margin: 0;
 }
 
 .admin-panel {
-    padding: 50px 0px;
-    background: #f5f5f5;
-    min-height: 100vh;
+  padding: 50px 0px;
+  background: #fff;
+  min-height: 100vh;
+}
+
+.admin-panel ul.p-tabview-nav {
+  justify-content: center;
+  margin-bottom: 66px;
+  border-bottom: 0;
+  background: #f0f0f0;
+  border-radius: 16px;
+  display: inline-flex;
+  padding: 11px;
+  gap: 20px;
+}
+
+.admin-panel .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #215db5;
+  color: #ffffff;
+}
+
+.admin-panel .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  background: #d8e8ff;
+  border: 0;
+  border-radius: 12px;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  color: #65a3ff;
+}
+
+.admin-panel .p-tabview-nav-content {
+  display: flex;
+  justify-content: center;
+}
+
+.admin-panel .p-tabview-nav-container {
+  display: flex;
+  justify-content: center;
+}
+
+.inventory h2 {
+  margin-top: 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 100%;
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .admin-panel {
+    padding: 20px 0px;
+  }
+
+  .admin-panel h1 {
+    font-size: 26px;
+    line-height: 36px;
+  }
+
+  .admin-panel
+    .p-tabview
+    .p-tabview-nav-container
+    .p-tabview-nav-content
+    ul.p-tabview-nav {
+    margin-bottom: 20px;
+    margin-top: 15px;
+  }
+
+  .admin-panel .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    font-size: 16px;
+    padding: 15px 20px !important;
+  }
+
+  .admin-panel .p-tabview .p-tabview-panels {
+    padding: 0;
+}
+
+.admin-panel .p-tabview .p-tabview-panels .toggle-btns {
+    margin-top: 10px;
+}
 }

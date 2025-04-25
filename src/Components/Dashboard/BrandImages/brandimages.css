@@ -5,10 +5,12 @@
 .brand-images-list {
   display: flex;
   width: 100%;
-  background: #fff;
+  background: #f5f5f587;
   gap: 35px;
   padding: 30px 20px;
   flex-wrap: wrap;
+  border: 1px solid #e5e7eb;
+  border-radius: 0px 0px 5px 5px;
 }
 
 .brand-images-list .shadow-md.relative.p-card.p-component {
@@ -61,6 +63,11 @@
   border: #215db5 !important;
 }
 
+.brand-images-container .p-fileupload-content {
+  border-radius: 0;
+  border-bottom: 0;
+}
+
 @media (max-width: 768px) {
   .brand-images-list {
     gap: 30px 15px;
@@ -69,4 +76,18 @@
   .brand-images-list .shadow-md.relative.p-card.p-component {
     width: calc(50% - 10px);
   }
+}
+
+@media (max-width: 600px) {
+  .brand-images-container
+    .p-fileupload-buttonbar
+    span.p-button.p-fileupload-choose.p-component {
+    width: 100%;
+    margin: 0;
+  }
+
+  .p-fileupload-buttonbar button.p-button.p-component {
+    margin: 0px;
+    width: calc(50% - 5px);
+}
 }
