@@ -50,6 +50,139 @@
   font-weight: bold;
 }
 
+.upload-box {
+  border: 2px dashed #bbb;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  transition: 0.2s ease;
+}
+
+.upload-box:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+span.delete-rv-img {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 999;
+  background: red;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 50px;
+  font-size: 14px;
+  line-height: 14px;
+  cursor: pointer;
+}
+
+.add-image {
+  width: 120px;
+  height: 120px;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.add-image-placeholder {
+  font-size: 36px;
+  color: #888;
+}
+
+.add-image:hover {
+  border-color: #aaa;
+  background: #f9f9f9;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 2;
+}
+
+.preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+
+}
+
+h2.add-image-section {
+  text-align: left;
+  font-size: 20px;
+  margin-bottom: 15px;
+  margin-top: 30px;
+}
+
+.preview-item {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.delete-btn {
+  position: absolute;
+    top: 5px;
+    right: 5px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    line-height: 13px;
+    padding: 5px;
+    font-size: 12px;
+}
+
+button.select-img-btn {
+  background: #215db5;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.image-item.upload-slot {
+  display: flex
+;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .inventory h2 {
     text-align: left;

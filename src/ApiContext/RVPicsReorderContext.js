@@ -12,30 +12,62 @@ export const useRVPicsReorder = () => {
 };
 
 export const RVPicsReorderProvider = ({ children }) => {
+  const BASE_URL = 'https://rvlistingbackend.campingx.net/main';
+
   const reorderRVPics = async (contactId, rvPics) => {
-    try {
-      const payload = new URLSearchParams();
-      payload.append('contact_id', contactId);
-      payload.append('rv_pics', JSON.stringify(rvPics));
+    const payload = new URLSearchParams();
+    payload.append('contact_id', contactId);
+    payload.append('rv_pics', JSON.stringify(rvPics));
 
-      const response = await axios.post(
-        'https://rvlistingbackend.campingx.net/main/reorder_rv_pics',
-        payload,
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        }
-      );
+    const response = await axios.post(`${BASE_URL}/reorder_rv_pics`, payload, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
 
-      console.log('RV pics reordered successfully:', response.data);
-    } catch (error) {
-      console.error('Failed to reorder RV pics:', error.response?.data || error.message);
-    }
+    return response.data;
+  };
+
+  const addRVPics = async (contactId, imageFiles) => {
+    const formData = new FormData();
+    formData.append('contact_id', contactId);
+    imageFiles.forEach((file) => formData.append('image_uploads', file));
+
+    const response = await axios.post(`${BASE_URL}/add_images`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    return response.data;
+  };
+
+  const deleteRVPic = async (contactId, imageUrl) => {
+    const response = await axios.delete(`${BASE_URL}/delete_rv_image`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        contact_id: contactId,
+        image_url: imageUrl,
+      },
+    });
+
+    return response.data;
+  };
+
+  const getRVPics = async (contactId) => {
+    const response = await axios.get(`${BASE_URL}/get_rv_images`, {
+      params: { contact_id: contactId },
+    });
+
+    return response.data.rv_pics || [];
   };
 
   return (
-    <RVPicsReorderContext.Provider value={{ reorderRVPics }}>
+    <RVPicsReorderContext.Provider
+      value={{ reorderRVPics, addRVPics, deleteRVPic, getRVPics }}
+    >
       {children}
     </RVPicsReorderContext.Provider>
   );
