@@ -9,7 +9,7 @@ import { FaTimes } from "react-icons/fa";
 
 const ImageReorder = ({ product }) => {
   const [images, setImages] = useState([]);
-  const [uploading, setUploading] = useState(false);
+  // const [uploading, setUploading] = useState(false);
   const [deletingIds, setDeletingIds] = useState([]);
   const [globalLoading, setGlobalLoading] = useState(false);
   const { reorderRVPics, addRVPics, deleteRVPic } = useRVPicsReorder();
@@ -67,7 +67,7 @@ const ImageReorder = ({ product }) => {
     // Show the selected images immediately
     setImages((prev) => [...prev, ...tempImageObjects]);
   
-    setUploading(true);
+    // setUploading(true);
     setGlobalLoading(true);
   
     try {
@@ -103,7 +103,7 @@ const ImageReorder = ({ product }) => {
       // Roll back: remove temporary previews
       setImages((prev) => prev.filter((img) => !img.isTemporary));
     } finally {
-      setUploading(false);
+      // setUploading(false);
       setGlobalLoading(false);
       e.target.value = null;
     }
@@ -137,6 +137,7 @@ const ImageReorder = ({ product }) => {
 
   return (
     <div className="image-reorder-container">
+     
       {globalLoading && (
         <div className="full-page-loader">
           <ProgressSpinner />
@@ -183,11 +184,7 @@ const ImageReorder = ({ product }) => {
                 className="image-item upload-slot"
                 onClick={() => fileInputRef.current.click()}
               >
-                {uploading ? (
-                  <ProgressSpinner />
-                ) : (
-                  <span className="upload-label">Click to add image</span>
-                )}
+                <span className="upload-label">Click to add image</span>
                 <input
                   ref={fileInputRef}
                   type="file"
