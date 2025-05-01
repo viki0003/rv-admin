@@ -39,7 +39,7 @@ const ImageReorder = ({ product }) => {
       toast.current.show({
         severity: "success",
         summary: "Success",
-        detail: "Order saved",
+        detail: "Reorder saved",
         life: 3000,
       });
     } catch {
