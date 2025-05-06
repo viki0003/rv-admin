@@ -6,11 +6,16 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Button } from "primereact/button";
 import "./imagereorder.css";
 import { FaTimes } from "react-icons/fa";
+import { Dialog } from "primereact/dialog";
+import { Galleria } from "primereact/galleria";
 
 const ImageReorder = ({ product }) => {
   const [deletingIds, setDeletingIds] = useState([]);
   const [globalLoading, setGlobalLoading] = useState(false);
-  const { images, reorderRVPics, addRVPics, deleteRVPic, getRVPics } = useRVPicsReorder();
+  const { images, reorderRVPics, addRVPics, deleteRVPic, getRVPics } =
+    useRVPicsReorder();
+  const [carouselVisible, setCarouselVisible] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   const toast = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -51,9 +56,9 @@ const ImageReorder = ({ product }) => {
   const handleFilesSelected = async (e) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
-  
+
     setGlobalLoading(true);
-  
+
     try {
       await addRVPics(product.id, files);
       toast.current.show({
@@ -99,6 +104,11 @@ const ImageReorder = ({ product }) => {
     }
   };
 
+  const openCarousel = (index) => {
+    setActiveIndex(index);
+    setCarouselVisible(true);
+  };
+
   return (
     <div className="image-reorder-container">
       {globalLoading && (
@@ -121,12 +131,18 @@ const ImageReorder = ({ product }) => {
                 <Draggable key={url} draggableId={url} index={idx}>
                   {(prov, snap) => (
                     <div
-                      className={`image-item ${snap.isDragging ? "dragging" : ""}`}
+                      className={`image-item ${
+                        snap.isDragging ? "dragging" : ""
+                      }`}
                       ref={prov.innerRef}
                       {...prov.draggableProps}
                       {...prov.dragHandleProps}
                     >
-                      <img src={url} alt={`Img ${idx + 1}`} />
+                      <img
+                        src={url}
+                        alt={`Img ${idx + 1}`}
+                        onClick={() => openCarousel(idx)}
+                      />
                       <span className="image-order-number">{idx + 1}</span>
                       <Button
                         className="p-button-rounded p-button-text delete-btn"
@@ -159,6 +175,54 @@ const ImageReorder = ({ product }) => {
           )}
         </Droppable>
       </DragDropContext>
+
+      <Dialog
+  visible={carouselVisible}
+  onHide={() => setCarouselVisible(false)}
+  header="RV Images"
+  style={{ width: '90vw', maxWidth: '1200px' }}
+  modal
+  className="custom-carousel-dialog"
+>
+  <Galleria
+    value={images.map((url) => ({ itemImageSrc: url }))}
+    activeIndex={activeIndex}
+    onItemChange={(e) => setActiveIndex(e.index)}
+    showThumbnails
+    showItemNavigators
+    showItemNavigatorsOnHover
+    circular
+    numVisible={5}
+    item={(item) => (
+      <img
+        src={item.itemImageSrc}
+        alt="carousel"
+        style={{
+          width: '100%',
+          maxHeight: '450px',
+          objectFit: 'contain',
+          borderRadius: '12px',
+          boxShadow: '0 2px 20px rgba(0,0,0,0.15)',
+        }}
+      />
+    )}
+    thumbnail={(item) => (
+      <img
+        src={item.itemImageSrc}
+        alt="thumb"
+        style={{
+          width: 100,
+          height: 60,
+          objectFit: 'cover',
+          borderRadius: '8px',
+          margin: '0 4px',
+          cursor: 'pointer',
+        }}
+      />
+    )}
+  />
+</Dialog>
+
     </div>
   );
 };

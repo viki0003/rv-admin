@@ -198,6 +198,24 @@ button.select-img-btn {
   z-index: 9999;
 }
 
+.custom-carousel-dialog .p-dialog-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.custom-carousel-dialog .p-dialog-content {
+  padding: 2rem;
+  background-color: #f9f9f9;
+}
+
+.p-galleria-thumbnail-item {
+  transition: transform 0.3s ease;
+}
+.p-galleria-thumbnail-item:hover {
+  transform: scale(1.05);
+}
+
 
 
 @media (max-width: 768px) {
