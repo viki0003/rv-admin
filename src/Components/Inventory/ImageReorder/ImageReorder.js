@@ -10,7 +10,7 @@ import { FaTimes } from "react-icons/fa";
 const ImageReorder = ({ product }) => {
   const [deletingIds, setDeletingIds] = useState([]);
   const [globalLoading, setGlobalLoading] = useState(false);
-  const { images, setImages, reorderRVPics, addRVPics, deleteRVPic, getRVPics } = useRVPicsReorder();
+  const { images, reorderRVPics, addRVPics, deleteRVPic, getRVPics } = useRVPicsReorder();
   const toast = useRef(null);
   const fileInputRef = useRef(null);
 
