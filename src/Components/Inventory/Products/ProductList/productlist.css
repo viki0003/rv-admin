@@ -6,12 +6,12 @@
 }
 
 .rv-inventory h3 {
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 100%;
-    color: #000000;
-    margin-bottom: 31px;
-    margin-top: 40px;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 100%;
+  color: #000000;
+  margin-bottom: 31px;
+  margin-top: 40px;
 }
 
 .no-products {
@@ -85,4 +85,16 @@
   padding: 20px;
   background: #f5f5f5;
   border-radius: 10px;
+}
+
+@media (max-width: 991px) {
+  .all-products-ui {
+    flex-direction: column;
+  }
+
+  .admin-panel ul.p-tabview-nav {
+    justify-content: flex-start !important;
+    overflow: auto;
+}
+
 }
