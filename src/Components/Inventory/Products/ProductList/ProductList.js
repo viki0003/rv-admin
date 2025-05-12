@@ -5,10 +5,13 @@ import { useProducts } from "../.././../../ApiContext/ProductApi";
 import ProductFilter from "../Filter/Filter";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import "./productlist.css";
+import SearchBar from "../SearchBar/SearchBar";
 
 const ProductList = () => {
   const { products, loading, error } = useProducts();
+  const [sortOrder, setSortOrder] = useState("new");
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
     vehicle_type: [],
     make: [],
@@ -22,9 +25,9 @@ const ProductList = () => {
   useEffect(() => {
     if (products.length > 0) {
       const lengths = products
-        .map(p => Number(p.vehicle_type_length))
-        .filter(length => !isNaN(length));
-      
+        .map((p) => Number(p.vehicle_type_length))
+        .filter((length) => !isNaN(length));
+
       if (lengths.length > 0) {
         const minLength = Math.min(...lengths);
         const maxLength = Math.max(...lengths);
@@ -42,55 +45,50 @@ const ProductList = () => {
 
     const { vehicle_type, make, series, vehicle_year } = filters;
 
-    // Check if any filters are active
-    const hasActiveFilters = 
-      vehicle_type.length > 0 || 
-      make.length > 0 || 
-      series.length > 0 || 
-      vehicle_year.length > 0;
+    const matchesVehicleType =
+      vehicle_type.length === 0 || vehicle_type.includes(product.vehicle_type);
 
-    // Check each filter category
-    const matchesVehicleType = 
-      vehicle_type.length === 0 || 
-      vehicle_type.includes(product.vehicle_type);
+    const matchesMake = make.length === 0 || make.includes(product.make);
 
-    const matchesMake = 
-      make.length === 0 || 
-      make.includes(product.make);
+    const matchesSeries =
+      series.length === 0 || series.includes(product.series);
 
-    const matchesSeries = 
-      series.length === 0 || 
-      series.includes(product.series);
+    const matchesYear =
+      vehicle_year.length === 0 || vehicle_year.includes(product.vehicle_year);
 
-    const matchesYear = 
-      vehicle_year.length === 0 || 
-      vehicle_year.includes(product.vehicle_year);
-
-    // Convert vehicle_type_length to number for comparison
     const productLength = Number(product.vehicle_type_length);
     const matchesRange =
       !isNaN(productLength) &&
       productLength >= rangeValue[0] &&
       productLength <= rangeValue[1];
 
-    // If no category filters are active, only check length range
-    if (!hasActiveFilters) {
-      return matchesRange;
-    }
+    const searchMatch = searchTerm.trim()
+      ? `${product.vehicle_year || ""} ${product.make || ""} ${
+          product.trim_model || ""
+        }`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      : true;
 
-    // If category filters are active, check both category filters and length range
     return (
       matchesVehicleType &&
       matchesMake &&
       matchesSeries &&
       matchesYear &&
-      matchesRange
+      matchesRange &&
+      searchMatch
     );
   });
 
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
-  const displayedProducts = filteredProducts.slice(
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const dateA = new Date(a.created_at); // Or whichever field you're using
+    const dateB = new Date(b.created_at);
+    return sortOrder === "new" ? dateB - dateA : dateA - dateB;
+  });
+
+  const displayedProducts = sortedProducts.slice(
     (currentPage - 1) * productsPerPage,
     currentPage * productsPerPage
   );
@@ -108,9 +106,38 @@ const ProductList = () => {
       return acc;
     }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
   return (
     <div className="rv-inventory">
       <h3>List of RVs</h3>
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        products={products}
+      />
+      <div className="product-list-header">
+        <div className="product-range">
+          Showing {(currentPage - 1) * productsPerPage + 1} -{" "}
+          {Math.min(currentPage * productsPerPage, filteredProducts.length)} out
+          of {filteredProducts.length} Products
+        </div>
+        <div className="sort-dropdown">
+          <label>Sort by:&nbsp;</label>
+          <select
+            value={sortOrder}
+            onChange={(e) => {
+              setSortOrder(e.target.value);
+              setCurrentPage(1);
+            }}
+          >
+            <option value="new">New arrival</option>
+            <option value="old">Old arrival</option>
+          </select>
+        </div>
+      </div>
       <div className="all-products-ui">
         <ProductFilter
           value={rangeValue}

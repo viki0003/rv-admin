@@ -24,17 +24,41 @@ const ProductFilter = ({
     setSelectedCategories(filters);
   }, [filters]);
 
+  const getNonRedundantValues = (items) => {
+    const uniqueWords = new Set();
+    const filtered = [];
+
+    for (const item of items) {
+      const words = item.toLowerCase().split(/\s+/);
+      const hasOverlap = words.some((w) => uniqueWords.has(w));
+      if (!hasOverlap) {
+        words.forEach((w) => uniqueWords.add(w));
+        filtered.push(item);
+      }
+    }
+
+    return filtered;
+  };
+
   const availableFilters = {
+    vehicle_year: [
+      ...new Set(
+        products
+          ?.map((p) => p?.vehicle_year)
+          .filter((v) => {
+            const year = parseInt(v);
+            return year >= 1900 && year <= new Date().getFullYear();
+          })
+          .sort((a, b) => a - b)
+      ),
+    ],
     vehicle_type: [
       ...new Set(products?.map((p) => p?.vehicle_type).filter(Boolean)),
     ],
-    make: [...new Set(products?.map((p) => p?.make).filter(Boolean))],
-    series: [...new Set(products?.map((p) => p?.series).filter(Boolean))],
-    vehicle_year: [
-      ...new Set(
-        products?.map((p) => p?.vehicle_year).filter((v) => v != null)
-      ),
-    ],
+    make: getNonRedundantValues(products.map((p) => p?.make).filter(Boolean)),
+    series: getNonRedundantValues(
+      products.map((p) => p?.series).filter(Boolean)
+    ),
   };
 
   const hasFilters = Object.values(availableFilters).some(
@@ -98,20 +122,22 @@ const ProductFilter = ({
             <h4>{key.replace(/_/g, " ").toUpperCase()}</h4>
             {values.length > 0 ? (
               <div className="pf-select-filter-list">
-                {(expandedFilters[key] ? values : values.slice(0, 8)).map((val) => (
-                  <div key={val} className="flex align-items-center mb-1">
-                    <Checkbox
-                      inputId={`${key}-${val}`}
-                      name={key}
-                      value={val}
-                      onChange={() => onCategoryChange(key, val)}
-                      checked={selectedCategories[key]?.includes(val)}
-                    />
-                    <label htmlFor={`${key}-${val}`} className="ml-2">
-                      {val}
-                    </label>
-                  </div>
-                ))}
+                {(expandedFilters[key] ? values : values.slice(0, 8)).map(
+                  (val) => (
+                    <div key={val} className="flex align-items-center mb-1">
+                      <Checkbox
+                        inputId={`${key}-${val}`}
+                        name={key}
+                        value={val}
+                        onChange={() => onCategoryChange(key, val)}
+                        checked={selectedCategories[key]?.includes(val)}
+                      />
+                      <label htmlFor={`${key}-${val}`} className="ml-2">
+                        {val}
+                      </label>
+                    </div>
+                  )
+                )}
 
                 {values.length > 8 && (
                   <button

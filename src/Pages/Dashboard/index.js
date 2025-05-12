@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import BrandIamges from "../../Components/Dashboard/BrandImages/BrandImages";
 import ToggleElements from "../../Components/Dashboard/ToggleElements/ToggleElements";
 import { TabView, TabPanel } from "primereact/tabview";
@@ -5,11 +6,16 @@ import "./dashboard.css";
 import ProductList from "../../Components/Inventory/Products/ProductList/ProductList";
 
 const Dashboard = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <div className="admin-panel">
       <div className="container">
         <h1>Admin Panel</h1>
-        <TabView>
+        <TabView
+          activeIndex={activeIndex}
+          onTabChange={(e) => setActiveIndex(e.index)}
+        >
           <TabPanel header="Elements">
             <div className="toggle-btns">
               <h2>Display Elements in Website</h2>
@@ -33,7 +39,7 @@ const Dashboard = () => {
                 src="https://staging.d13ngs1xcza78.amplifyapp.com/"
                 width="100%"
                 height="100%"
-                styles={{ border: "none" }}
+                style={{ border: "none" }}
                 title="Website Preview"
                 allowFullScreen
                 scrolling="auto"
