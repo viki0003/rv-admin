@@ -54,6 +54,21 @@
   color: #000;
 }
 
+.iframe-container {
+  height: 800px;
+  overflow: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.iframe-container iframe {
+  border: none;
+  border-radius: 8px;;
+}
+
+
+
 @media (max-width: 768px) {
   .admin-panel {
     padding: 20px 0px;
@@ -80,9 +95,13 @@
 
   .admin-panel .p-tabview .p-tabview-panels {
     padding: 0;
-}
+  }
 
-.admin-panel .p-tabview .p-tabview-panels .toggle-btns {
+  .admin-panel .p-tabview .p-tabview-panels .toggle-btns {
     margin-top: 10px;
-}
+  }
+
+  .iframe-container {
+    height: 600px;
+  }
 }

@@ -1,0 +1,40 @@
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    gap: 80px;
+  }
+  
+  .not-found-container img {
+    width: 60%;
+    height: auto;
+    max-width: 600px; /* Ensures it doesn’t get too large on bigger screens */
+  }
+  
+  .not-found-container h1 {
+    font-size: 24px;
+    font-weight:700;
+    margin-top: 10px;
+    color: #333;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 1300px) {
+    .not-found-container img {
+      width: 50%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .not-found-container img {
+      width: 70%;
+    }
+  
+    .not-found-container h1 {
+      font-size: 20px;
+    }
+  }
+  

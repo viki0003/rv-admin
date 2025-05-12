@@ -1,0 +1,104 @@
+.all-products .filter-aside {
+    max-width: 345px;
+    width: 100%;
+    padding: 40px 24px;
+    background-color: #F9FAFB;
+    height: fit-content;
+}
+
+
+
+.product-filter .pf-list-item h4 {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+    text-transform: uppercase;
+    margin-top: 0;
+    color: #1F2937;
+}
+
+.product-filter .pf-list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.product-filter .pf-list {
+    display: flex;
+    flex-direction: column;
+    gap: 54px;
+}
+
+.pf-range-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.pf-range-filter .pf-range-term {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.pf-range-filter .pf-range-term span {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    color: #4B5563;
+}
+
+.pf-range-filter .pf-range-term p {
+    margin-top: 0px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    color: #1F2937;
+}
+
+.pf-range-filter .p-slider {
+    width: 100% !important;
+    background: #1118270f;
+}
+
+.pf-range-filter .p-slider span.p-slider-range {
+    background: #215DB5;
+}
+
+.pf-range-filter .p-slider  span.p-slider-handle {
+    background: #215DB5;
+    border: 2px solid #FFFFFF;
+}
+
+.product-filter .pf-list-item .pf-select-filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-filter .pf-list-item .pf-select-filter-list .flex.align-items-center {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.product-filter .pf-list-item .pf-select-filter-list .flex.align-items-center label.ml-2 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    color: #1F2937;
+}
+
+.product-filter .pf-list-item .pf-select-filter-list .flex.align-items-center .p-checkbox.p-component .p-checkbox-box {border-radius: 0px;border: 1.5px solid #374151;}
+
+button.expand-filter-btn {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    text-align: left;
+    width: fit-content;
+    color: #007bff;
+    font-weight: 800 !important;
+    cursor: pointer;
+}
