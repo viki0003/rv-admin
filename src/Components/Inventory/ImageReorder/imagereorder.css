@@ -229,10 +229,6 @@ button.select-img-btn {
     font-size: 20px;
   }
 
-  .rv-inventory .product-list {
-    grid-template-columns: 1fr;
-  }
-
   .rv-inventory .product-list .rv-product-item .rv-product-image {
     height: 200px;
     gap: 30px;

@@ -6,12 +6,15 @@ import ProductFilter from "../Filter/Filter";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import "./productlist.css";
 import SearchBar from "../SearchBar/SearchBar";
+import { Sidebar } from "primereact/sidebar";
+import { FiFilter } from "react-icons/fi";
 
 const ProductList = () => {
   const { products, loading, error } = useProducts();
   const [sortOrder, setSortOrder] = useState("new");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [visible, setVisible] = useState(false);
   const [filters, setFilters] = useState({
     vehicle_type: [],
     make: [],
@@ -21,7 +24,6 @@ const ProductList = () => {
   const [rangeValue, setRangeValue] = useState([0, 100]);
   const productsPerPage = 9;
 
-  // Set initial range based on available products
   useEffect(() => {
     if (products.length > 0) {
       const lengths = products
@@ -83,7 +85,7 @@ const ProductList = () => {
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    const dateA = new Date(a.created_at); // Or whichever field you're using
+    const dateA = new Date(a.created_at);
     const dateB = new Date(b.created_at);
     return sortOrder === "new" ? dateB - dateA : dateA - dateB;
   });
@@ -113,16 +115,47 @@ const ProductList = () => {
   return (
     <div className="rv-inventory">
       <h3>List of RVs</h3>
-      <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        products={products}
-      />
+      <div className="product-action-sm">
+        <span className="filter-btn" onClick={() => setVisible(true)}>
+          <FiFilter />
+        </span>
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          products={products}
+        />
+         <p>
+            Showing {(currentPage - 1) * productsPerPage + 1} -{" "}
+            {Math.min(currentPage * productsPerPage, filteredProducts.length)}{" "}
+            out of {filteredProducts.length} Products
+          </p>
+      </div>
+
       <div className="product-list-header">
-        <div className="product-range">
-          Showing {(currentPage - 1) * productsPerPage + 1} -{" "}
-          {Math.min(currentPage * productsPerPage, filteredProducts.length)} out
-          of {filteredProducts.length} Products
+        <div className="product-filter-sm">
+          <div className="card flex justify-content-center">
+            <Sidebar
+              header="Filter"
+              visible={visible}
+              onHide={() => setVisible(false)}
+            >
+              <ProductFilter
+                value={rangeValue}
+                setValue={setRangeValue}
+                products={products}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            </Sidebar>
+          </div>
+        </div>
+        {/* <div className="product-range">
+          <p>
+            {" "}
+            Showing {(currentPage - 1) * productsPerPage + 1} -{" "}
+            {Math.min(currentPage * productsPerPage, filteredProducts.length)}{" "}
+            out of {filteredProducts.length} Products
+          </p>
         </div>
         <div className="sort-dropdown">
           <label>Sort by:&nbsp;</label>
@@ -136,7 +169,7 @@ const ProductList = () => {
             <option value="new">New arrival</option>
             <option value="old">Old arrival</option>
           </select>
-        </div>
+        </div> */}
       </div>
       <div className="all-products-ui">
         <ProductFilter
@@ -146,7 +179,7 @@ const ProductList = () => {
           filters={filters}
           setFilters={setFilters}
         />
-        <div>
+        <div className="all-rv-list-ui">
           {loading && <Loader />}
           {error && <p style={{ color: "red" }}>{error}</p>}
           {!loading && !error && (
