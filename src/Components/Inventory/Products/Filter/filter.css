@@ -102,3 +102,15 @@ button.expand-filter-btn {
     font-weight: 800 !important;
     cursor: pointer;
 }
+
+.filter-itemm {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filter-itemm span.filter-product-count {
+    color: #000;
+    font-size: 14px;
+    margin-left: 10px;
+}

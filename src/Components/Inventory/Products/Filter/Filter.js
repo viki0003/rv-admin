@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Slider } from "primereact/slider";
 import { Checkbox } from "primereact/checkbox";
 import "./filter.css";
@@ -10,19 +10,7 @@ const ProductFilter = ({
   filters = {},
   setFilters,
 }) => {
-  const [selectedCategories, setSelectedCategories] = useState({
-    vehicle_type: [],
-    make: [],
-    series: [],
-    vehicle_year: [],
-  });
-
   const [expandedFilters, setExpandedFilters] = useState({});
-
-  // Update selectedCategories when filters change
-  useEffect(() => {
-    setSelectedCategories(filters);
-  }, [filters]);
 
   const getNonRedundantValues = (items) => {
     const uniqueWords = new Set();
@@ -66,18 +54,14 @@ const ProductFilter = ({
   );
 
   const onCategoryChange = (categoryKey, value) => {
-    setSelectedCategories((prev) => {
-      const currentValues = prev[categoryKey] || [];
-      const newValues = currentValues.includes(value)
-        ? currentValues.filter((v) => v !== value)
-        : [...currentValues, value];
+    const currentValues = filters[categoryKey] || [];
+    const newValues = currentValues.includes(value)
+      ? currentValues.filter((v) => v !== value)
+      : [...currentValues, value];
 
-      const updated = {
-        ...prev,
-        [categoryKey]: newValues,
-      };
-      setFilters(updated);
-      return updated;
+    setFilters({
+      ...filters,
+      [categoryKey]: newValues,
     });
   };
 
@@ -116,7 +100,6 @@ const ProductFilter = ({
           </div>
         </div>
 
-        {/* Render each dynamic filter section */}
         {Object.entries(availableFilters).map(([key, values]) => (
           <div className="pf-list-item" key={key}>
             <h4>{key.replace(/_/g, " ").toUpperCase()}</h4>
@@ -124,21 +107,36 @@ const ProductFilter = ({
               <div className="pf-select-filter-list">
                 {(expandedFilters[key] ? values : values.slice(0, 8)).map(
                   (val) => (
-                    <div key={val} className="flex align-items-center mb-1">
-                      <Checkbox
-                        inputId={`${key}-${val}`}
-                        name={key}
-                        value={val}
-                        onChange={() => onCategoryChange(key, val)}
-                        checked={selectedCategories[key]?.includes(val)}
-                      />
-                      <label htmlFor={`${key}-${val}`} className="ml-2">
-                        {val}
-                      </label>
+                    <div className="filter-itemm" key={val}>
+                      <div className="flex align-items-center mb-1">
+                        <Checkbox
+                          inputId={`${key}-${val}`}
+                          name={key}
+                          value={val}
+                          onChange={() => onCategoryChange(key, val)}
+                          checked={filters[key]?.includes(val)}
+                        />
+                        <label htmlFor={`${key}-${val}`} className="ml-2">
+                          {val}
+                        </label>
+                      </div>
+                      <span className="filter-product-count">
+                        {
+                          products.filter((product) => {
+                            const filtersToApply = { ...filters };
+                            filtersToApply[key] = [val];
+                            return Object.entries(filtersToApply).every(
+                              ([fKey, fValues]) => {
+                                if (!fValues.length) return true;
+                                return fValues.includes(product[fKey]);
+                              }
+                            );
+                          }).length
+                        }
+                      </span>
                     </div>
                   )
                 )}
-
                 {values.length > 8 && (
                   <button
                     type="button"
