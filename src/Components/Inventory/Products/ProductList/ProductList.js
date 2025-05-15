@@ -11,6 +11,7 @@ import { FiFilter } from "react-icons/fi";
 
 const ProductList = () => {
   const { products, loading, error } = useProducts();
+
   const [sortOrder, setSortOrder] = useState("new");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,8 +23,10 @@ const ProductList = () => {
     vehicle_year: [],
   });
   const [rangeValue, setRangeValue] = useState([0, 100]);
+
   const productsPerPage = 9;
 
+  // Initialize range slider based on available lengths
   useEffect(() => {
     if (products.length > 0) {
       const lengths = products
@@ -38,10 +41,12 @@ const ProductList = () => {
     }
   }, [products]);
 
+  // Reset to first page on filter/range/search changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [filters, rangeValue]);
+  }, [filters, rangeValue, searchTerm]);
 
+  // Filtering logic
   const filteredProducts = products.filter((product) => {
     if (!product) return false;
 
@@ -49,12 +54,9 @@ const ProductList = () => {
 
     const matchesVehicleType =
       vehicle_type.length === 0 || vehicle_type.includes(product.vehicle_type);
-
     const matchesMake = make.length === 0 || make.includes(product.make);
-
     const matchesSeries =
       series.length === 0 || series.includes(product.series);
-
     const matchesYear =
       vehicle_year.length === 0 || vehicle_year.includes(product.vehicle_year);
 
@@ -67,7 +69,9 @@ const ProductList = () => {
     const searchMatch = searchTerm.trim()
       ? `${product.vehicle_year || ""} ${product.make || ""} ${
           product.trim_model || ""
-        }`
+        } ${product.stock_number || ""} ${product.sale_price || ""} ${
+          product.retail_price || ""
+        } ${product.vehicle_type_length || ""} ${product.vehicle_description || ""}`
           .toLowerCase()
           .includes(searchTerm.toLowerCase())
       : true;
@@ -108,13 +112,10 @@ const ProductList = () => {
       return acc;
     }, []);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
-
   return (
     <div className="rv-inventory">
       <h3>List of RVs</h3>
+
       <div className="product-action-sm">
         <span className="filter-btn" onClick={() => setVisible(true)}>
           <FiFilter />
@@ -124,39 +125,30 @@ const ProductList = () => {
           setSearchTerm={setSearchTerm}
           products={products}
         />
-         <p>
-            Showing {(currentPage - 1) * productsPerPage + 1} -{" "}
-            {Math.min(currentPage * productsPerPage, filteredProducts.length)}{" "}
-            out of {filteredProducts.length} Products
-          </p>
+        <p>
+          Showing {(currentPage - 1) * productsPerPage + 1} -{" "}
+          {Math.min(currentPage * productsPerPage, filteredProducts.length)} out
+          of {filteredProducts.length} Products
+        </p>
       </div>
 
       <div className="product-list-header">
         <div className="product-filter-sm">
-          <div className="card flex justify-content-center">
-            <Sidebar
-              header="Filter"
-              visible={visible}
-              onHide={() => setVisible(false)}
-            >
-              <ProductFilter
-                value={rangeValue}
-                setValue={setRangeValue}
-                products={products}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            </Sidebar>
-          </div>
+          <Sidebar
+            header="Filter"
+            visible={visible}
+            onHide={() => setVisible(false)}
+          >
+            <ProductFilter
+              value={rangeValue}
+              setValue={setRangeValue}
+              products={products}
+              filters={filters}
+              setFilters={setFilters}
+            />
+          </Sidebar>
         </div>
-        {/* <div className="product-range">
-          <p>
-            {" "}
-            Showing {(currentPage - 1) * productsPerPage + 1} -{" "}
-            {Math.min(currentPage * productsPerPage, filteredProducts.length)}{" "}
-            out of {filteredProducts.length} Products
-          </p>
-        </div>
+
         <div className="sort-dropdown">
           <label>Sort by:&nbsp;</label>
           <select
@@ -169,8 +161,9 @@ const ProductList = () => {
             <option value="new">New arrival</option>
             <option value="old">Old arrival</option>
           </select>
-        </div> */}
+        </div>
       </div>
+
       <div className="all-products-ui">
         <ProductFilter
           value={rangeValue}
@@ -179,9 +172,11 @@ const ProductList = () => {
           filters={filters}
           setFilters={setFilters}
         />
+
         <div className="all-rv-list-ui">
           {loading && <Loader />}
           {error && <p style={{ color: "red" }}>{error}</p>}
+
           {!loading && !error && (
             <>
               <div className="product-list">
